@@ -24,6 +24,8 @@ public class Store extends BaseEntity {
 
     private LocalDate closeTime;
 
+    private Float score;
+
     @Column(nullable = false, length = 30)
     private String address;
 
