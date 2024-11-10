@@ -25,7 +25,7 @@ public class Review extends BaseEntity {
 
     private float stars;
 
-    @Column(nullable = false, length = 50)
+    @Column(length = 50)
     private String reply;
 
     @ManyToOne(fetch = FetchType.LAZY)
