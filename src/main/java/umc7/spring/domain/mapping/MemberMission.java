@@ -5,6 +5,7 @@ import lombok.*;
 import umc7.spring.domain.Member;
 import umc7.spring.domain.Mission;
 import umc7.spring.domain.Region;
+import umc7.spring.domain.base.BaseEntity;
 import umc7.spring.domain.enums.MissionStatus;
 
 @Entity
@@ -12,7 +13,7 @@ import umc7.spring.domain.enums.MissionStatus;
 @Builder
 @NoArgsConstructor(access= AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MemberMission {
+public class MemberMission extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
