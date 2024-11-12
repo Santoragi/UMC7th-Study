@@ -5,7 +5,6 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import umc7.spring.domain.Mission;
-import umc7.spring.domain.QMember;
 import umc7.spring.domain.QMission;
 import umc7.spring.domain.enums.MissionStatus;
 import umc7.spring.domain.mapping.QMemberMission;
@@ -17,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MissionRepositoryImpl implements MissionRepositoryCustom {
     private final JPAQueryFactory jpaQueryFactory;
-    private final QMember member = QMember.member;
     private final QMission mission = QMission.mission;
     private final QMemberMission memberMission = QMemberMission.memberMission;
 
@@ -27,14 +25,12 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
         predicate.and(memberMission.member.id.eq(memberId));
         predicate.and(memberMission.status.eq(missionStatus));
 
-        List<Mission> missions = jpaQueryFactory
+        return jpaQueryFactory
                 .selectFrom(mission)
                 .join(memberMission).on(mission.id.eq(memberMission.mission.id))
                 .where(predicate)
                 .orderBy(memberMission.createdAt.desc())
                 .fetch();
-
-        return missions;
     }
 
 }

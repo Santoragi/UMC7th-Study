@@ -42,8 +42,8 @@ public class Application {
 			System.out.println("MemberID: " + id);
 			System.out.println("missionStatus: "+missionStatus);
 
-			missionService.findAllMissionByStatusAndMemberId(id,missionStatus);
-//					.forEach(System.out::println);
+			missionService.findAllMissionByStatusAndMemberId(id,missionStatus)
+					.forEach(System.out::println);
 		};
 	}
 }

@@ -4,10 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc7.spring.domain.Mission;
-import umc7.spring.domain.Store;
 import umc7.spring.domain.enums.MissionStatus;
 import umc7.spring.repository.MissionRepository.MissionRepository;
-import umc7.spring.repository.StoreRepository.StoreRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +25,7 @@ public class MissionQueryServiceImpl implements MissionQueryService{
     @Override
     public List<Mission> findAllMissionByStatusAndMemberId(Long memberId, MissionStatus missionStatus) {
         List<Mission> filteredMissions = missionRepository.findAllMissionByStatusAndMemberId(memberId, missionStatus);
-        filteredMissions.forEach(store -> System.out.println("Store: " + store));
+        filteredMissions.forEach(mission -> System.out.println("Mission: " + mission));
 
         return filteredMissions;
     }

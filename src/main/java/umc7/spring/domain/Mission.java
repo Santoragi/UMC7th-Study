@@ -39,7 +39,7 @@ public class Mission extends BaseEntity {
 
     @Override
     public String toString() {
-        return "Store{" +
+        return "Mission{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", cost='" + cost + '\'' +
