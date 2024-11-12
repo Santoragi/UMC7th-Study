@@ -1,6 +1,8 @@
 package umc7.spring.service.MissionService;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc7.spring.domain.Mission;
@@ -29,4 +31,22 @@ public class MissionQueryServiceImpl implements MissionQueryService{
 
         return filteredMissions;
     }
+
+    @Override
+    public Page<Mission> findMissionByMemberIDAndRegionId(Long memberId, Long regionId, Pageable pageable){
+        Page<Mission> filteredMissions = missionRepository.findMissionByMemberIDAndRegionId(memberId, regionId, pageable);
+        filteredMissions.forEach(mission -> System.out.println("Mission: " + mission));
+
+        return filteredMissions;
+    }
+
+    @Override
+    public List<Long> countMissionComplete(Long memberId, Long regionId){
+        List<Long> count = missionRepository.countMissionComplete(memberId, regionId);
+        System.out.println("Total: " + count.get(0));
+        System.out.println("Complete: " + count.get(1));
+
+        return count;
+    }
+
 }

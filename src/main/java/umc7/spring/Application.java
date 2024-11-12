@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import umc7.spring.domain.enums.MissionStatus;
 import umc7.spring.service.MissionService.MissionQueryService;
 import umc7.spring.service.StoreService.StoreQueryService;
@@ -18,6 +20,8 @@ public class Application {
 
 	@Bean
 	public CommandLineRunner run(ApplicationContext context) {
+
+		//워크북 내용
 //		return args -> {
 //			StoreQueryService storeService = context.getBean(StoreQueryService.class);
 //
@@ -33,16 +37,35 @@ public class Application {
 //			storeService.findStoresByNameAndScore(name, score)
 //					.forEach(System.out::println);
 //		};
+
+		//미션1. 내가 완료한 미션 확인하기
+//		return args -> {
+//			MissionQueryService missionService = context.getBean(MissionQueryService.class);
+//
+//			Long id = 1L;
+//			MissionStatus missionStatus = MissionStatus.valueOf("COMPLETE");
+//
+//			System.out.println("MemberID: " + id);
+//			System.out.println("missionStatus: "+missionStatus);
+//
+//			missionService.findAllMissionByStatusAndMemberId(id,missionStatus)
+//					.forEach(System.out::println);
+//		};
+
+		//미션3. 홈 화면 쿼리 -> 선택한 지역에서 도전 가능한 미션
+		Pageable pageable = PageRequest.of(0,3);
 		return args -> {
 			MissionQueryService missionService = context.getBean(MissionQueryService.class);
 
-			Long id = 1L;
-			MissionStatus missionStatus = MissionStatus.valueOf("COMPLETE");
+			Long memberId = 1L;
+			Long regionId = 1L;
 
-			System.out.println("MemberID: " + id);
-			System.out.println("missionStatus: "+missionStatus);
+			System.out.println("MemberID: " + memberId);
+			System.out.println("RegionID: " + regionId);
 
-			missionService.findAllMissionByStatusAndMemberId(id,missionStatus)
+			missionService.findMissionByMemberIDAndRegionId(memberId, regionId, pageable)
+					.forEach(System.out::println);
+			missionService.countMissionComplete(memberId, regionId)
 					.forEach(System.out::println);
 		};
 	}
