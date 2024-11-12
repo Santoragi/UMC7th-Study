@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import umc7.spring.domain.enums.MissionStatus;
+import umc7.spring.service.MemberService.MemberQueryService;
 import umc7.spring.service.MissionService.MissionQueryService;
 import umc7.spring.service.StoreService.StoreQueryService;
 
@@ -53,20 +54,31 @@ public class Application {
 //		};
 
 		//미션3. 홈 화면 쿼리 -> 선택한 지역에서 도전 가능한 미션
-		Pageable pageable = PageRequest.of(0,3);
+//		Pageable pageable = PageRequest.of(0,3);
+//		return args -> {
+//			MissionQueryService missionService = context.getBean(MissionQueryService.class);
+//
+//			Long memberId = 1L;
+//			Long regionId = 1L;
+//
+//			System.out.println("MemberID: " + memberId);
+//			System.out.println("RegionID: " + regionId);
+//
+//			missionService.findMissionByMemberIDAndRegionId(memberId, regionId, pageable)
+//					.forEach(System.out::println);
+//			missionService.countMissionComplete(memberId, regionId)
+//					.forEach(System.out::println);
+//		};
+
+		//미션4. 마이페이지
 		return args -> {
-			MissionQueryService missionService = context.getBean(MissionQueryService.class);
+			MemberQueryService memberService = context.getBean(MemberQueryService.class);
 
 			Long memberId = 1L;
-			Long regionId = 1L;
 
-			System.out.println("MemberID: " + memberId);
-			System.out.println("RegionID: " + regionId);
+			System.out.println("MemberID: "+ memberId);
+			memberService.findMemberById(memberId);
 
-			missionService.findMissionByMemberIDAndRegionId(memberId, regionId, pageable)
-					.forEach(System.out::println);
-			missionService.countMissionComplete(memberId, regionId)
-					.forEach(System.out::println);
 		};
 	}
 }
