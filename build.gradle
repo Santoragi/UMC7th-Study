@@ -37,6 +37,9 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-data-rest:1.6.9'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	//에러 핸들러 관련
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
 
 sourceSets {
