@@ -2,11 +2,13 @@ package umc7.spring.service.TempService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import umc7.spring.apiPayload.code.status.ErrorStatus;
 import umc7.spring.apiPayload.exception.handler.TempHandler;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class TempQueryServiceImpl implements TempQueryService{
 
     @Override
