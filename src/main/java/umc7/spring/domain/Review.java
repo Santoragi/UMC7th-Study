@@ -22,7 +22,6 @@ public class Review extends BaseEntity {
     private String body;
 
     //리뷰 사진 생략
-
     private float stars;
 
     @Column(length = 50)
@@ -39,5 +38,9 @@ public class Review extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id")
     private Region region;
+
+    public void setStore(Store store){
+        this.store = store;
+    }
 
 }
