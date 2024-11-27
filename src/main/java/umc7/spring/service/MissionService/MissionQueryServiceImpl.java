@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import umc7.spring.domain.Mission;
 import umc7.spring.domain.enums.MissionStatus;
+import umc7.spring.domain.mapping.MemberMission;
+import umc7.spring.repository.MemberMissionRepository.MemberMissionRepository;
 import umc7.spring.repository.MissionRepository.MissionRepository;
 
 import java.util.List;
@@ -18,6 +20,7 @@ import java.util.Optional;
 public class MissionQueryServiceImpl implements MissionQueryService{
 
     private final MissionRepository missionRepository;
+    private final MemberMissionRepository memberMissionRepository;
 
     @Override
     public Optional<Mission> findMission(Long id) {
@@ -47,6 +50,19 @@ public class MissionQueryServiceImpl implements MissionQueryService{
         System.out.println("Complete: " + count.get(1));
 
         return count;
+    }
+
+    @Override
+    public boolean checkMissionStatus(Long memberId, Long missionId) {
+        MemberMission memberMission= memberMissionRepository.findMemberMissionByMemberIdAndMissionId(memberId,missionId);
+        boolean result;
+        if(memberMission.getStatus() == MissionStatus.INPROGRESS){
+            result = false;
+        }
+        else result = true;
+
+        return result;
+
     }
 
 }

@@ -100,4 +100,14 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
         return result;
     }
 
+    @Override
+    public Mission findMissionById(Long missionId) {
+        return jpaQueryFactory
+                .select(mission)
+                .from(mission)
+                .where(mission.id.eq(missionId))
+                .fetchOne();
+    }
+
+
 }

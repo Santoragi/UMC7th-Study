@@ -17,4 +17,6 @@ public interface MissionQueryService {
 
     List<Long> countMissionComplete(Long memberId, Long regionId);
 
+    boolean checkMissionStatus(Long memberId,Long missionId);
+
 }
