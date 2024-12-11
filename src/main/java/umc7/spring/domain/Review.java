@@ -22,7 +22,7 @@ public class Review extends BaseEntity {
     private String body;
 
     //리뷰 사진 생략
-    private float stars;
+    private Float stars;
 
     @Column(length = 50)
     private String reply;
