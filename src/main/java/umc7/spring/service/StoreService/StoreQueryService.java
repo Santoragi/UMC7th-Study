@@ -1,6 +1,7 @@
 package umc7.spring.service.StoreService;
 
 import org.springframework.data.domain.Page;
+import umc7.spring.domain.Mission;
 import umc7.spring.domain.Review;
 import umc7.spring.domain.Store;
 
@@ -13,4 +14,5 @@ public interface StoreQueryService {
     List<Store> findStoresByNameAndScore(String name, Float score);
 
     Page<Review> getReviewList(Long storeId, Integer page);
+    Page<Mission> getMissionList(Long storeId, Integer page);
 }
