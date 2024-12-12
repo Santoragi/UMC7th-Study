@@ -25,17 +25,25 @@ public class MissionRepositoryImpl implements MissionRepositoryCustom {
     private final QMemberMission memberMission = QMemberMission.memberMission;
 
     @Override
-    public List<Mission> findAllMissionByStatusAndMemberId(Long memberId, MissionStatus missionStatus) {
+    public Page<Mission> findAllMissionByStatusAndMemberId(Long memberId, MissionStatus missionStatus, Pageable pageable) {
         BooleanBuilder predicate = new BooleanBuilder();
         predicate.and(memberMission.member.id.eq(memberId));
         predicate.and(memberMission.status.eq(missionStatus));
 
-        return jpaQueryFactory
+        List<Mission> missions =jpaQueryFactory
                 .selectFrom(mission)
                 .join(memberMission).on(mission.id.eq(memberMission.mission.id))
                 .where(predicate)
                 .orderBy(memberMission.createdAt.desc())
                 .fetch();
+
+        long total = jpaQueryFactory
+                .select(memberMission.count())
+                .from(memberMission)
+                .where(predicate)
+                .fetchOne();
+
+        return new PageImpl<>(missions, pageable, total);
     }
 
     @Override

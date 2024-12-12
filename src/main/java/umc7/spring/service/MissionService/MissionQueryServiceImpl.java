@@ -2,6 +2,7 @@ package umc7.spring.service.MissionService;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,6 +10,7 @@ import umc7.spring.domain.Mission;
 import umc7.spring.domain.enums.MissionStatus;
 import umc7.spring.domain.mapping.MemberMission;
 import umc7.spring.repository.MemberMissionRepository.MemberMissionRepository;
+import umc7.spring.repository.MemberRepository.MemberRepository;
 import umc7.spring.repository.MissionRepository.MissionRepository;
 
 import java.util.List;
@@ -21,6 +23,7 @@ public class MissionQueryServiceImpl implements MissionQueryService{
 
     private final MissionRepository missionRepository;
     private final MemberMissionRepository memberMissionRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public Optional<Mission> findMission(Long id) {
@@ -28,8 +31,8 @@ public class MissionQueryServiceImpl implements MissionQueryService{
     }
 
     @Override
-    public List<Mission> findAllMissionByStatusAndMemberId(Long memberId, MissionStatus missionStatus) {
-        List<Mission> filteredMissions = missionRepository.findAllMissionByStatusAndMemberId(memberId, missionStatus);
+    public Page<Mission> findAllMissionByStatusAndMemberId(Long memberId, MissionStatus missionStatus, PageRequest page) {
+        Page<Mission> filteredMissions = missionRepository.findAllMissionByStatusAndMemberId(memberId, missionStatus, page);
         filteredMissions.forEach(mission -> System.out.println("Mission: " + mission));
 
         return filteredMissions;
@@ -62,6 +65,15 @@ public class MissionQueryServiceImpl implements MissionQueryService{
         else result = true;
 
         return result;
+
+    }
+
+    //멤버의 도전중인 미션 목록
+    @Override
+    public Page<Mission> getMissionList(Long memberId, Integer page) {
+        Page<Mission> missionPage = this.findAllMissionByStatusAndMemberId(memberId, MissionStatus.INPROGRESS, PageRequest.of(page,10));
+
+        return missionPage;
 
     }
 
