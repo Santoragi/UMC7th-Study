@@ -54,7 +54,7 @@ public class StoreRestController {
     })
     public ApiResponse<ReviewResponseDTO.ReviewPreViewListDTO> getReviewList(
             @ExistStores @PathVariable(name = "storeId") Long storeId,
-            @CheckPage @RequestParam(name = "page") Integer page){
+            @CheckPage Integer page){
 
         Page<Review> reviewList = storeQueryService.getReviewList(storeId, page);
         System.out.println("page: "+page);
@@ -74,7 +74,7 @@ public class StoreRestController {
     })
     public ApiResponse<MissionResponseDTO.MissionPreViewListDTO> getMissionList(
             @ExistStores @PathVariable(name = "storeId") Long storeId,
-            @CheckPage @RequestParam(name = "page") Integer page){
+            @CheckPage Integer page){
 
         Page<Mission> missionList = storeQueryService.getMissionList(storeId, page);
         return ApiResponse.onSuccess(MissionConverter.missionPreViewListDTO(missionList));

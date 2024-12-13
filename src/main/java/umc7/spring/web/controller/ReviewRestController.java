@@ -47,7 +47,7 @@ public class ReviewRestController {
     })
     public ApiResponse<ReviewResponseDTO.ReviewPreViewListDTO> getReviewList(
             @PathVariable(name = "memberId") Long memberId,
-            @CheckPage @RequestParam(name = "page") Integer page){
+            @CheckPage Integer page){
 
         Page<Review> reviewList = reviewQueryService.getReviewList(memberId, page);
         System.out.println("page: "+page);

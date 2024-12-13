@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+import umc7.spring.apiPayload.code.status.ErrorStatus;
+import umc7.spring.apiPayload.exception.handler.PageHandler;
 import umc7.spring.validation.annotation.CheckPage;
 
 @RequiredArgsConstructor
@@ -16,7 +18,8 @@ public class CheckPageArgumentResolver implements HandlerMethodArgumentResolver 
     public boolean supportsParameter(MethodParameter parameter) {
         //디버그용 출력
         System.out.println("supportsParameter");
-        return parameter.hasParameterAnnotation(CheckPage.class);
+        return parameter.hasParameterAnnotation(CheckPage.class)&&
+                parameter.getParameterType().equals(Integer.class);
     }
 
     @Override
@@ -27,16 +30,17 @@ public class CheckPageArgumentResolver implements HandlerMethodArgumentResolver 
         //디버그용 출력
         System.out.println("resolveArgument");
 
-        String pageParam = String.valueOf(webRequest);
-        if (pageParam != null) {
-            try {
-                int page = Integer.parseInt(pageParam);
-                return page - 1; // page 값을 -1로 변경
-            } catch (NumberFormatException e) {
-                throw new IllegalArgumentException("Invalid page parameter");
-            }
+        String pageParam = webRequest.getParameter("page");
+        if (pageParam == null || pageParam.isEmpty()) {
+            throw new PageHandler(ErrorStatus.INVALID_PAGE_NUMBER); //입력값이 없으면 에러
         }
-        return null; // 파라미터가 없을 경우 null 반환
+
+        int page = Integer.parseInt(pageParam);
+        if (page < 1) {
+            throw new PageHandler(ErrorStatus.INVALID_PAGE_NUMBER); // 1보다 작은 경우 에러
+        }
+
+        return page - 1;
     }
 }
 

@@ -49,7 +49,7 @@ public class MissionRestController {
     })
     public ApiResponse<MissionResponseDTO.MissionPreViewListDTO> getMissionList(
             @PathVariable(name = "memberId") Long memberId,
-            @CheckPage @RequestParam(name = "page") Integer page){
+            @CheckPage Integer page){
 
         Page<Mission> missionList = missionQueryService.getMissionList(memberId, page);
 
