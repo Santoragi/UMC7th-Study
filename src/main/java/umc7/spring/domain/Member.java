@@ -8,6 +8,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import umc7.spring.domain.base.BaseEntity;
 import umc7.spring.domain.enums.Gender;
 import umc7.spring.domain.enums.MemberStatus;
+import umc7.spring.domain.enums.Role;
 import umc7.spring.domain.mapping.MemberAgree;
 import umc7.spring.domain.mapping.MemberMission;
 import umc7.spring.domain.mapping.MemberPrefer;
@@ -38,6 +39,15 @@ public class Member extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'OTHER'")
     private Gender gender;
+
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Column(nullable = false, length = 30)
     private String address;
@@ -84,6 +94,10 @@ public class Member extends BaseEntity {
                 ", phoneNum=" + phoneNum + '\'' +
                 ", point=" + point + '\'' +
                 '}';
+    }
+
+    public void encodePassword(String password) {
+        this.password = password;
     }
 
 }
