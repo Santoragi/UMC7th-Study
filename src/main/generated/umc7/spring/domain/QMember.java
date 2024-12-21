@@ -59,6 +59,8 @@ public class QMember extends EntityPathBase<Member> {
 
     public final EnumPath<umc7.spring.domain.enums.Role> role = createEnum("role", umc7.spring.domain.enums.Role.class);
 
+    public final StringPath specAddress = createString("specAddress");
+
     public final EnumPath<umc7.spring.domain.enums.MemberStatus> status = createEnum("status", umc7.spring.domain.enums.MemberStatus.class);
 
     //inherited

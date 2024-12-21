@@ -33,7 +33,7 @@ public class Member extends BaseEntity {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, columnDefinition = "VARCHAR(20) DEFAULT '2000-01-01'")
     private String birthDate;
 
     @Enumerated(EnumType.STRING)
@@ -51,6 +51,9 @@ public class Member extends BaseEntity {
 
     @Column(nullable = false, length = 30)
     private String address;
+
+    @Column(length = 30)
+    private String specAddress;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "VARCHAR(15) DEFAULT 'ACTIVE'")
